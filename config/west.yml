@@ -5,8 +5,8 @@ manifest:
   projects:
     - name: zmk
       remote: zmkfirmware
-      revision: main
-      import:
-        path-prefix: app
+      revision: main          # você pode piná-lo depois se quiser estabilidade
+      import: app/west.yml    # <- caminho correto do manifest do ZMK
   self:
     path: config
+
