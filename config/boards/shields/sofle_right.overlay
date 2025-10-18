@@ -1,0 +1,10 @@
+/* RIGHT: peripheral via BLE */
+&split {
+    compatible = "zmk,split-bluetooth";
+    status = "okay";
+    role = "peripheral";
+};
+
+&split_serial {
+    status = "disabled";
+};
