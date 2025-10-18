@@ -41,15 +41,17 @@ jobs:
             -DSHIELD=sofle_left \
             -DZMK_CONFIG=${GITHUB_WORKSPACE}/config \
             -DCONFIG_ZMK_STUDIO=y \
-            -DSNIPPET=studio-rpc-usb-uart
-
+            -DSNIPPET=studio-rpc-usb-uart \
+            -DCONFIG_ZMK_STUDIO_LOCKING=n
+      
       - name: Build RIGHT
         run: |
           west build -s zmk/app -d build/right -b nice_nano_v2 -- \
             -DSHIELD=sofle_right \
             -DZMK_CONFIG=${GITHUB_WORKSPACE}/config \
             -DCONFIG_ZMK_STUDIO=y \
-            -DSNIPPET=studio-rpc-usb-uart
+            -DSNIPPET=studio-rpc-usb-uart \
+            -DCONFIG_ZMK_STUDIO_LOCKING=n
 
       - name: Build SETTINGS_RESET
         run: |
