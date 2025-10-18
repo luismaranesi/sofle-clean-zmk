@@ -16,10 +16,23 @@ jobs:
 
       - name: Init West (pull ZMK via manifest)
         run: |
+          python3 --version
+          pip3 --version
+      
+          # Garante 'west' disponível e no PATH
+          pip3 install --user west
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+          export PATH="$HOME/.local/bin:$PATH"
+          west --version
+      
+          # Inicializa projeto com o manifest em config/west.yml
           west init -l config
           west update
           west zephyr-export
+      
+          # Dependências do Zephyr/ZMK
           pip3 install --user -r zephyr/scripts/requirements.txt
+
 
       - name: Build LEFT
         run: |
