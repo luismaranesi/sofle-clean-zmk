@@ -1,0 +1,34 @@
+name: Build ZMK Firmware
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: zmkfirmware/zmk-build-arm:3.5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build (west)
+        run: |
+          west init -l config
+          west update
+          west zephyr-export
+          pip3 install --user -r zephyr/scripts/requirements.txt
+          west build -s zmk/app -b nice_nano_v2 -- -DSHIELD=sofle_left -DZMK_CONFIG=${GITHUB_WORKSPACE}/config -DCONFIG_ZMK_STUDIO=y -DSNIPPET=studio-rpc-usb-uart
+          west build -s zmk/app -b nice_nano_v2 -- -DSHIELD=sofle_right -DZMK_CONFIG=${GITHUB_WORKSPACE}/config -DCONFIG_ZMK_STUDIO=y -DSNIPPET=studio-rpc-usb-uart
+          west build -s zmk/app -b nice_nano_v2 -- -DSHIELD=settings_reset -DZMK_CONFIG=${GITHUB_WORKSPACE}/config
+
+      - name: Upload Firmware Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: firmware
+          path: |
+            build/zephyr/zmk.uf2
+            build/zephyr/zmk.hex
+            build/zephyr/app.overlay
