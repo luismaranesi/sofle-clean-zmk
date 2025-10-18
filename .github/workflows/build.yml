@@ -14,21 +14,40 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Build (west)
+      - name: Init West (pull ZMK via manifest)
         run: |
           west init -l config
           west update
           west zephyr-export
           pip3 install --user -r zephyr/scripts/requirements.txt
-          west build -s zmk/app -b nice_nano_v2 -- -DSHIELD=sofle_left -DZMK_CONFIG=${GITHUB_WORKSPACE}/config -DCONFIG_ZMK_STUDIO=y -DSNIPPET=studio-rpc-usb-uart
-          west build -s zmk/app -b nice_nano_v2 -- -DSHIELD=sofle_right -DZMK_CONFIG=${GITHUB_WORKSPACE}/config -DCONFIG_ZMK_STUDIO=y -DSNIPPET=studio-rpc-usb-uart
-          west build -s zmk/app -b nice_nano_v2 -- -DSHIELD=settings_reset -DZMK_CONFIG=${GITHUB_WORKSPACE}/config
+
+      - name: Build LEFT
+        run: |
+          west build -s zmk/app -d build/left -b nice_nano_v2 -- \
+            -DSHIELD=sofle_left \
+            -DZMK_CONFIG=${GITHUB_WORKSPACE}/config \
+            -DCONFIG_ZMK_STUDIO=y \
+            -DSNIPPET=studio-rpc-usb-uart
+
+      - name: Build RIGHT
+        run: |
+          west build -s zmk/app -d build/right -b nice_nano_v2 -- \
+            -DSHIELD=sofle_right \
+            -DZMK_CONFIG=${GITHUB_WORKSPACE}/config \
+            -DCONFIG_ZMK_STUDIO=y \
+            -DSNIPPET=studio-rpc-usb-uart
+
+      - name: Build SETTINGS_RESET
+        run: |
+          west build -s zmk/app -d build/reset -b nice_nano_v2 -- \
+            -DSHIELD=settings_reset \
+            -DZMK_CONFIG=${GITHUB_WORKSPACE}/config
 
       - name: Upload Firmware Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: firmware
           path: |
-            build/zephyr/zmk.uf2
-            build/zephyr/zmk.hex
-            build/zephyr/app.overlay
+            build/left/zephyr/zmk.uf2
+            build/right/zephyr/zmk.uf2
+            build/reset/zephyr/zmk.uf2
