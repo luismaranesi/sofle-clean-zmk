@@ -1,0 +1,11 @@
+/* LEFT: central/master via BLE */
+&split {
+    compatible = "zmk,split-bluetooth";
+    status = "okay";
+    role = "central";
+};
+
+/* garanta que serial/TRRS fique desligado */
+&split_serial {
+    status = "disabled";
+};
