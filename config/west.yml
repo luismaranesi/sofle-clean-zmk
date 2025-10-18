@@ -5,7 +5,7 @@ manifest:
   projects:
     - name: zmk
       remote: zmkfirmware
-      revision: main          # você pode piná-lo depois se quiser estabilidade
+      revision: v0.3.0          # você pode piná-lo depois se quiser estabilidade
       import: app/west.yml    # <- caminho correto do manifest do ZMK
   self:
     path: config
