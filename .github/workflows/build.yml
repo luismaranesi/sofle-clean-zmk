@@ -36,7 +36,7 @@ jobs:
 
       - name: Build LEFT (standalone p/ Studio)
         run: |
-          west build -s zmk/app -d build/left -b nice_nano_v2 -- \
+          west build -s zmk/app -p -d build/left -b nice_nano_v2 -- \
             -DSHIELD=sofle_left \
             -DZMK_CONFIG=${GITHUB_WORKSPACE}/config \
             -DSNIPPET=studio-rpc-usb-uart
