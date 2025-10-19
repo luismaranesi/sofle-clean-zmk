@@ -73,3 +73,12 @@ jobs:
             build/left/zephyr/zmk.uf2
             # build/right/zephyr/zmk.uf2
             build/reset/zephyr/zmk.uf2
+      - name: Show USB/WebUSB config (left)
+        run: |
+          grep -E 'ZMK_USB|USB_DEVICE_STACK|WEBUSB|BOS|WEBUSB_URL|CDC_ACM|USB_DEVICE_VID|USB_DEVICE_PID' build/left/zephyr/.config || true
+
+      - name: Upload .config (left)
+        uses: actions/upload-artifact@v4
+        with:
+          name: left-zephyr-config
+          path: build/left/zephyr/.config
