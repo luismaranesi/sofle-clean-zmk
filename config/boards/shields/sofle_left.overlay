@@ -9,3 +9,8 @@
 &split_serial {
     status = "disabled";
 };
+
+/* Habilita o USB device do nRF52840 (nice_nano_v2) */
+&usbd {
+    status = "okay";
+};

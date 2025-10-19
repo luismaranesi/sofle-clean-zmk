@@ -85,3 +85,7 @@ jobs:
       - name: Show USB/WebUSB config (left)
         run: |
           grep -E '(^CONFIG_USB=|USB_DEVICE_STACK|WEBUSB|BOS|WEBUSB_URL|ZMK_USB|CDC_ACM|USB_DEVICE_VID|USB_DEVICE_PID)' build/left/zephyr/.config || true
+      - name: Show USB/WebUSB config (left)
+        run: |
+          echo "---- zephyr/.config USB summary (left) ----"
+          grep -E '^(CONFIG_USB=|CONFIG_USB_DEVICE_STACK=|CONFIG_USB_DEVICE_STACK_NEXT=|CONFIG_USB_DEVICE_BOS=|CONFIG_USB_DEVICE_WEBUSB=|CONFIG_USB_DEVICE_WEBUSB_URL=|CONFIG_ZMK_USB=|CONFIG_USB_CDC_ACM=|CONFIG_USB_DEVICE_VID=|CONFIG_USB_DEVICE_PID=)' build/left/zephyr/.config || true
