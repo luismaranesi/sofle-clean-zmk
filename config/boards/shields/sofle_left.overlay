@@ -5,12 +5,12 @@
     role = "central";
 };
 
-/* garanta que serial/TRRS fique desligado */
+/* garante que serial/TRRS fique desligado */
 &split_serial {
     status = "disabled";
 };
 
-/* Habilita o USB device do nRF52840 (nice_nano_v2) */
+/* habilita o controlador USB para o ZMK Studio via WebUSB */
 &usbd {
     status = "okay";
 };
