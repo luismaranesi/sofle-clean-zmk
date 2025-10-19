@@ -82,3 +82,6 @@ jobs:
         with:
           name: left-zephyr-config
           path: build/left/zephyr/.config
+      - name: Show USB/WebUSB config (left)
+        run: |
+          grep -E '(^CONFIG_USB=|USB_DEVICE_STACK|WEBUSB|BOS|WEBUSB_URL|ZMK_USB|CDC_ACM|USB_DEVICE_VID|USB_DEVICE_PID)' build/left/zephyr/.config || true
