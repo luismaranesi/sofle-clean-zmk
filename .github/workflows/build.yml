@@ -35,17 +35,21 @@ jobs:
 
       - name: Build LEFT (standalone p/ Studio)
         run: |
-          west clean
           west build -s zmk/app -p -d build/left -b nice_nano_v2 -- \
             -DSHIELD=sofle_left \
             -DZMK_CONFIG=${GITHUB_WORKSPACE}/config \
-            -DSNIPPET=studio-rpc-usb-uart
-      - name: Build LEFT (standalone p/ Studio)
-        run: |
-          west build -s zmk/app -p -d build/left -b nice_nano_v2 -- \
-            -DSHIELD=sofle_left \
-            -DZMK_CONFIG=${GITHUB_WORKSPACE}/config \
-            -DSNIPPET=studio-rpc-usb-uart
+            -DSNIPPET=studio-rpc-usb-uart \
+            -DCONFIG_USB=y \
+            -DCONFIG_USB_DEVICE_STACK=y \
+            -DCONFIG_USB_DEVICE_STACK_NEXT=y \
+            -DCONFIG_USB_DEVICE_BOS=y \
+            -DCONFIG_USB_DEVICE_WEBUSB=y \
+            -DCONFIG_USB_DEVICE_WEBUSB_URL="https://zmk.studio" \
+            -DCONFIG_ZMK_USB=y \
+            -DCONFIG_USB_CDC_ACM=y \
+            -DCONFIG_USB_DEVICE_VID=0x1D50 \
+            -DCONFIG_USB_DEVICE_PID=0x615E
+
 
       # - name: Build LEFT
       #   run: |
@@ -81,7 +85,8 @@ jobs:
             build/reset/zephyr/zmk.uf2
       - name: Show USB/WebUSB config (left)
         run: |
-          grep -E 'ZMK_USB|USB_DEVICE_STACK|WEBUSB|BOS|WEBUSB_URL|CDC_ACM|USB_DEVICE_VID|USB_DEVICE_PID' build/left/zephyr/.config || true
+          echo "---- zephyr/.config USB summary (left) ----"
+          grep -E '^(CONFIG_USB=|CONFIG_USB_DEVICE_STACK=|CONFIG_USB_DEVICE_STACK_NEXT=|CONFIG_USB_DEVICE_BOS=|CONFIG_USB_DEVICE_WEBUSB=|CONFIG_USB_DEVICE_WEBUSB_URL=|CONFIG_ZMK_USB=|CONFIG_USB_CDC_ACM=|CONFIG_USB_DEVICE_VID=|CONFIG_USB_DEVICE_PID=)' build/left/zephyr/.config || true
 
       - name: Upload .config (left)
         uses: actions/upload-artifact@v4
