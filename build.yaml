@@ -2,23 +2,19 @@ include:
   - config/boards/shields/sofle_left.conf
   - config/boards/shields/sofle_right.conf
   - config/prj.conf
+
   - board: nice_nano_v2
     shield: sofle_left
-    snippet: studio-rpc-usb-uart
+    # snippet oficial p/ Studio via USB (preferido)
+    snippet: studio-usb
+    # mantemos apenas flags do ZMK aqui
     cmake-args: >
-      -DCONFIG_USB=y
-      -DCONFIG_USB_DEVICE_STACK=y
-      -DCONFIG_USB_DEVICE_STACK_NEXT=y
-      -DCONFIG_USB_DEVICE_BOS=y
-      -DCONFIG_USB_DEVICE_WEBUSB=y
-      -DCONFIG_USB_DEVICE_WEBUSB_URL="https://zmk.studio"
+      -DCONFIG_ZMK_STUDIO=y
       -DCONFIG_ZMK_USB=y
-      -DCONFIG_USB_CDC_ACM=y
-      -DCONFIG_USB_DEVICE_VID=0x1D50
-      -DCONFIG_USB_DEVICE_PID=0x615
+
   - board: nice_nano_v2
     shield: sofle_right
+    # você pode manter o snippet atual do right ou nenhum; não afeta o teste do left
     snippet: studio-rpc-usb-uart
-    cmake-args: -DCONFIG_ZMK_STUDIO=y
-  - board: nice_nano_v2
-    shield: settings_reset
+    cmake-args: >
+      -DCONFIG_ZMK_STUDIO=y

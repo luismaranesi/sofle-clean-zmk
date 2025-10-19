@@ -5,12 +5,12 @@
     role = "central";
 };
 
-/* garante que serial/TRRS fique desligado */
+/* garanta que serial/TRRS fique desligado */
 &split_serial {
     status = "disabled";
 };
 
-/* habilita o controlador USB para o ZMK Studio via WebUSB */
+/* habilita o controlador USB do nRF52840 (necessário p/ Studio via USB) */
 &usbd {
     status = "okay";
 };
